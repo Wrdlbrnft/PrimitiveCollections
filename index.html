@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>PrimitiveCollections by Wrdlbrnft</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">PrimitiveCollections</h1>
+      <h2 class="project-tagline">A lightweight library for efficient Sets and Lists of primitive values.</h2>
+      <a href="https://github.com/Wrdlbrnft/PrimitiveCollections" class="btn">View on GitHub</a>
+      <a href="https://github.com/Wrdlbrnft/PrimitiveCollections/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Wrdlbrnft/PrimitiveCollections/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <ul>
+<li>
+<strong>Efficient implementations</strong>: The collection implementations are designed to guarantee best possible performance. Different collection implementations are specialized for different use cases.<br>
+</li>
+<li>
+<strong>Avoids boxing and unboxing</strong>: No boxing or unboxing of the primitive values occurs anywhere in the library. That allows for best possible performance and more reliability.</li>
+</ul>
+
+<p><a href="https://travis-ci.org/Wrdlbrnft/BetterBarcodes"><img src="https://travis-ci.org/Wrdlbrnft/BetterBarcodes.svg?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a id="how-do-i-add-it-to-my-project" class="anchor" href="#how-do-i-add-it-to-my-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How do I add it to my project?</h2>
+
+<p>Just add this dependency to your build.gradle file:</p>
+
+<div class="highlight highlight-source-groovy"><pre>compile <span class="pl-s"><span class="pl-pds">'</span>com.github.wrdlbrnft:primitive-collections:0.2.0.1<span class="pl-pds">'</span></span></pre></div>
+
+<h2>
+<a id="how-do-i-use-it" class="anchor" href="#how-do-i-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How do I use it?</h2>
+
+<p>PrimitiveCollections includes collection implementations for the following primitives:</p>
+
+<ul>
+<li><code>int</code></li>
+<li><code>long</code></li>
+<li><code>char</code></li>
+<li><code>byte</code></li>
+<li><code>float</code></li>
+<li><code>double</code></li>
+</ul>
+
+<p>For each type a separate collection interface with two implementations for either a list or a set exists:</p>
+
+<ul>
+<li>
+<code>IntCollection</code>: <code>IntSet</code> and <code>IntList</code>
+</li>
+<li>
+<code>LongCollection</code>: <code>LongSet</code> and <code>LongList</code>
+</li>
+<li>
+<code>CharCollection</code>: <code>CharSet</code> and <code>CharList</code>
+</li>
+<li>
+<code>ByteCollection</code>: <code>ByteSet</code> and <code>ByteList</code>
+</li>
+<li>
+<code>FloatCollection</code>: <code>FloatSet</code> and <code>FloatList</code>
+</li>
+<li>
+<code>DoubleCollection</code>: <code>DoubleSet</code> and <code>DoubleList</code>
+</li>
+</ul>
+
+<p>All collections work exactly the same way, the only difference is the primitive type they are made for.</p>
+
+<p>As an example:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">IntCollection</span> collection <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-smi">IntList</span>();
+
+<span class="pl-c">// Adding values to the collection</span>
+collection<span class="pl-k">.</span>add(someValue);
+
+<span class="pl-c">// Checking if a value is contained in the collection</span>
+<span class="pl-k">if</span>(collection<span class="pl-k">.</span>contains(someOtherValue)) {
+    <span class="pl-c">// Value is contained in the `IntSet`</span>
+}
+
+<span class="pl-c">// Iterating over all items in the collection</span>
+<span class="pl-k">for</span>(<span class="pl-k">int</span> i <span class="pl-k">=</span> <span class="pl-c1">0</span>, count <span class="pl-k">=</span> collection<span class="pl-k">.</span>size(); i <span class="pl-k">&lt;</span> count; i<span class="pl-k">++</span>) {
+
+    <span class="pl-c">// Value at index i</span>
+    <span class="pl-k">int</span> value <span class="pl-k">=</span> collection<span class="pl-k">.</span>get(i);
+}
+
+<span class="pl-c">// Getting an array of all the values in the collection.</span>
+<span class="pl-k">int</span>[] array <span class="pl-k">=</span> collection<span class="pl-k">.</span>toArray();</pre></div>
+
+<p>The difference between the list and set implementations is that a set can contain each unique value only once and that the items it contains are in an undefined order.</p>
+
+<p>The list implementations keep items in the order they were added to the collections and allow for the same value to be added multiple times.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Wrdlbrnft/PrimitiveCollections">PrimitiveCollections</a> is maintained by <a href="https://github.com/Wrdlbrnft">Wrdlbrnft</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
