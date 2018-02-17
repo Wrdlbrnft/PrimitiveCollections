@@ -1,9 +1,11 @@
 package com.github.wrdlbrnft.primitivecollections;
 
-import com.github.wrdlbrnft.primitivecollections.bytes.ByteCollection;
+import com.github.wrdlbrnft.primitivecollections.bytes.ByteArrayList;
+import com.github.wrdlbrnft.primitivecollections.bytes.ByteArraySet;
 import com.github.wrdlbrnft.primitivecollections.bytes.ByteList;
 import com.github.wrdlbrnft.primitivecollections.bytes.ByteSet;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,51 +16,49 @@ import org.junit.Test;
  */
 public class ByteCollectionTests {
 
+    private static final byte[] UNIQUE_BYTES = new byte[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
+
     @Test
-    public void testByteListBasic() {
-        final ByteCollection collection = new ByteList();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_BYTES);
-        final byte[] actual = collection.toArray();
-        final byte[] expected = TestHelpers.UNIQUE_BYTES;
-        Assert.assertArrayEquals(expected, actual);
+    public void testByteArrayListAdd() {
+        final ByteList collection = new ByteArrayList();
+        for (byte b : UNIQUE_BYTES) {
+            collection.add(b);
+        }
+        Assert.assertThat(collection.toArray(), CoreMatchers.equalTo(UNIQUE_BYTES));
     }
 
     @Test
-    public void testByteListComplex() {
-        final ByteCollection collection = new ByteList();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_BYTES);
-
-        final byte[] result = new byte[collection.getSize()];
-        for (int i = 0, count = collection.getSize(); i < count; i++) {
-            result[i] = collection.get(i);
+    public void testByteArrayListContains() {
+        final ByteList collection = new ByteArrayList();
+        for (byte b : UNIQUE_BYTES) {
+            collection.add(b);
         }
 
-        Assert.assertTrue(collection.contains(TestHelpers.CONTAINED_BYTE));
-        Assert.assertFalse(collection.contains(TestHelpers.OTHER_BYTE));
-        Assert.assertArrayEquals(TestHelpers.UNIQUE_BYTES, result);
-    }
-
-    @Test
-    public void testByteSetBasic() {
-        final ByteCollection collection = new ByteSet();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_BYTES);
-        final byte[] actual = collection.toArray();
-        final byte[] expected = TestHelpers.UNIQUE_BYTES;
-        Assert.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testByteSetComplex() {
-        final ByteCollection collection = new ByteSet();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_BYTES);
-
-        final byte[] result = new byte[collection.getSize()];
-        for (int i = 0, count = collection.getSize(); i < count; i++) {
-            result[i] = collection.get(i);
+        for (byte b : UNIQUE_BYTES) {
+            Assert.assertThat(collection.contains(b), CoreMatchers.is(true));
         }
+    }
 
-        Assert.assertTrue(collection.contains(TestHelpers.CONTAINED_BYTE));
-        Assert.assertFalse(collection.contains(TestHelpers.OTHER_BYTE));
-        Assert.assertArrayEquals(TestHelpers.UNIQUE_BYTES, result);
+    @Test
+    public void testByteArraySetAdd() {
+        final ByteSet collection = new ByteArraySet();
+        for (byte b : UNIQUE_BYTES) {
+            collection.add(b);
+        }
+        for (byte b : UNIQUE_BYTES) {
+            collection.add(b);
+        }
+        Assert.assertThat(collection.toArray(), CoreMatchers.equalTo(UNIQUE_BYTES));
+    }
+
+    @Test
+    public void testByteArraySetContains() {
+        final ByteSet collection = new ByteArraySet();
+        for (byte b : UNIQUE_BYTES) {
+            collection.add(b);
+        }
+        for (byte b : UNIQUE_BYTES) {
+            Assert.assertThat(collection.contains(b), CoreMatchers.is(true));
+        }
     }
 }

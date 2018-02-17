@@ -1,9 +1,11 @@
 package com.github.wrdlbrnft.primitivecollections;
 
-import com.github.wrdlbrnft.primitivecollections.ints.IntCollection;
+import com.github.wrdlbrnft.primitivecollections.ints.IntArrayList;
+import com.github.wrdlbrnft.primitivecollections.ints.IntArraySet;
 import com.github.wrdlbrnft.primitivecollections.ints.IntList;
 import com.github.wrdlbrnft.primitivecollections.ints.IntSet;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,51 +16,49 @@ import org.junit.Test;
  */
 public class IntCollectionTests {
 
+    private static final int[] UNIQUE_INTS = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26};
+
     @Test
-    public void testIntListBasic() {
-        final IntCollection collection = new IntList();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_INTS);
-        final int[] actual = collection.toArray();
-        final int[] expected = TestHelpers.UNIQUE_INTS;
-        Assert.assertArrayEquals(expected, actual);
+    public void testIntArrayListAdd() {
+        final IntList collection = new IntArrayList();
+        for (int b : UNIQUE_INTS) {
+            collection.add(b);
+        }
+        Assert.assertThat(collection.toArray(), CoreMatchers.equalTo(UNIQUE_INTS));
     }
 
     @Test
-    public void testIntListComplex() {
-        final IntCollection collection = new IntList();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_INTS);
-
-        final int[] result = new int[collection.getSize()];
-        for (int i = 0, count = collection.getSize(); i < count; i++) {
-            result[i] = collection.get(i);
+    public void testIntArrayListContains() {
+        final IntList collection = new IntArrayList();
+        for (int b : UNIQUE_INTS) {
+            collection.add(b);
         }
 
-        Assert.assertTrue(collection.contains(TestHelpers.CONTAINED_INT));
-        Assert.assertFalse(collection.contains(TestHelpers.OTHER_INT));
-        Assert.assertArrayEquals(TestHelpers.UNIQUE_INTS, result);
-    }
-
-    @Test
-    public void testIntSetBasic() {
-        final IntCollection collection = new IntSet();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_INTS);
-        final int[] actual = collection.toArray();
-        final int[] expected = TestHelpers.UNIQUE_INTS;
-        Assert.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testIntSetComplex() {
-        final IntCollection collection = new IntSet();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_INTS);
-
-        final int[] result = new int[collection.getSize()];
-        for (int i = 0, count = collection.getSize(); i < count; i++) {
-            result[i] = collection.get(i);
+        for (int b : UNIQUE_INTS) {
+            Assert.assertThat(collection.contains(b), CoreMatchers.is(true));
         }
+    }
 
-        Assert.assertTrue(collection.contains(TestHelpers.CONTAINED_INT));
-        Assert.assertFalse(collection.contains(TestHelpers.OTHER_INT));
-        Assert.assertArrayEquals(TestHelpers.UNIQUE_INTS, result);
+    @Test
+    public void testIntArraySetAdd() {
+        final IntSet collection = new IntArraySet();
+        for (int b : UNIQUE_INTS) {
+            collection.add(b);
+        }
+        for (int b : UNIQUE_INTS) {
+            collection.add(b);
+        }
+        Assert.assertThat(collection.toArray(), CoreMatchers.equalTo(UNIQUE_INTS));
+    }
+
+    @Test
+    public void testIntArraySetContains() {
+        final IntSet collection = new IntArraySet();
+        for (int b : UNIQUE_INTS) {
+            collection.add(b);
+        }
+        for (int b : UNIQUE_INTS) {
+            Assert.assertThat(collection.contains(b), CoreMatchers.is(true));
+        }
     }
 }

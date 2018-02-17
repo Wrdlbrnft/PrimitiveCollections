@@ -1,9 +1,11 @@
 package com.github.wrdlbrnft.primitivecollections;
 
-import com.github.wrdlbrnft.primitivecollections.chars.CharCollection;
+import com.github.wrdlbrnft.primitivecollections.chars.CharArrayList;
+import com.github.wrdlbrnft.primitivecollections.chars.CharArraySet;
 import com.github.wrdlbrnft.primitivecollections.chars.CharList;
 import com.github.wrdlbrnft.primitivecollections.chars.CharSet;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,51 +16,49 @@ import org.junit.Test;
  */
 public class CharCollectionTests {
 
+    private static final char[] UNIQUE_CHARS = new char[]{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
     @Test
-    public void testCharListBasic() {
-        final CharCollection collection = new CharList();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_CHARS);
-        final char[] actual = collection.toArray();
-        final char[] expected = TestHelpers.UNIQUE_CHARS;
-        Assert.assertArrayEquals(expected, actual);
+    public void testCharArrayListAdd() {
+        final CharList collection = new CharArrayList();
+        for (char b : UNIQUE_CHARS) {
+            collection.add(b);
+        }
+        Assert.assertThat(collection.toArray(), CoreMatchers.equalTo(UNIQUE_CHARS));
     }
 
     @Test
-    public void testCharListComplex() {
-        final CharCollection collection = new CharList();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_CHARS);
-
-        final char[] result = new char[collection.getSize()];
-        for (int i = 0, count = collection.getSize(); i < count; i++) {
-            result[i] = collection.get(i);
+    public void testCharArrayListContains() {
+        final CharList collection = new CharArrayList();
+        for (char b : UNIQUE_CHARS) {
+            collection.add(b);
         }
 
-        Assert.assertTrue(collection.contains(TestHelpers.CONTAINED_CHAR));
-        Assert.assertFalse(collection.contains(TestHelpers.OTHER_CHAR));
-        Assert.assertArrayEquals(TestHelpers.UNIQUE_CHARS, result);
-    }
-
-    @Test
-    public void testCharSetBasic() {
-        final CharCollection collection = new CharSet();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_CHARS);
-        final char[] actual = collection.toArray();
-        final char[] expected = TestHelpers.UNIQUE_CHARS;
-        Assert.assertArrayEquals(expected, actual);
-    }
-
-    @Test
-    public void testCharSetComplex() {
-        final CharCollection collection = new CharSet();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_CHARS);
-
-        final char[] result = new char[collection.getSize()];
-        for (int i = 0, count = collection.getSize(); i < count; i++) {
-            result[i] = collection.get(i);
+        for (char b : UNIQUE_CHARS) {
+            Assert.assertThat(collection.contains(b), CoreMatchers.is(true));
         }
+    }
 
-        Assert.assertTrue(collection.contains(TestHelpers.CONTAINED_CHAR));
-        Assert.assertFalse(collection.contains(TestHelpers.OTHER_CHAR));
-        Assert.assertArrayEquals(TestHelpers.UNIQUE_CHARS, result);
+    @Test
+    public void testCharArraySetAdd() {
+        final CharSet collection = new CharArraySet();
+        for (char b : UNIQUE_CHARS) {
+            collection.add(b);
+        }
+        for (char b : UNIQUE_CHARS) {
+            collection.add(b);
+        }
+        Assert.assertThat(collection.toArray(), CoreMatchers.equalTo(UNIQUE_CHARS));
+    }
+
+    @Test
+    public void testCharArraySetContains() {
+        final CharSet collection = new CharArraySet();
+        for (char b : UNIQUE_CHARS) {
+            collection.add(b);
+        }
+        for (char b : UNIQUE_CHARS) {
+            Assert.assertThat(collection.contains(b), CoreMatchers.is(true));
+        }
     }
 }

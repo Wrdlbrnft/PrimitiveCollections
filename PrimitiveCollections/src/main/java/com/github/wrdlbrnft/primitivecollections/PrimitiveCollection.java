@@ -11,5 +11,5 @@ import com.github.wrdlbrnft.proguardannotations.KeepClassMembers;
 @KeepClass
 @KeepClassMembers
 public interface PrimitiveCollection {
-    int getSize();
+    int size();
 }

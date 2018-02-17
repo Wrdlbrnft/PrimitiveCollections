@@ -1,9 +1,11 @@
 package com.github.wrdlbrnft.primitivecollections;
 
-import com.github.wrdlbrnft.primitivecollections.floats.FloatCollection;
+import com.github.wrdlbrnft.primitivecollections.floats.FloatArrayList;
+import com.github.wrdlbrnft.primitivecollections.floats.FloatArraySet;
 import com.github.wrdlbrnft.primitivecollections.floats.FloatList;
 import com.github.wrdlbrnft.primitivecollections.floats.FloatSet;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,51 +16,53 @@ import org.junit.Test;
  */
 public class FloatCollectionTests {
 
+    private static final float[] UNIQUE_FLOATS = new float[]{
+            1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f,
+            11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f, 17.0f, 18.0f, 19.0f,
+            20.0f, 21.0f, 22.0f, 23.0f, 24.0f, 25.0f, 26.0f
+    };
+
     @Test
-    public void testFloatListBasic() {
-        final FloatCollection collection = new FloatList();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_FLOATS);
-        final float[] actual = collection.toArray();
-        final float[] expected = TestHelpers.UNIQUE_FLOATS;
-        Assert.assertArrayEquals(expected, actual, 0.0f);
+    public void testFloatArrayListAdd() {
+        final FloatList collection = new FloatArrayList();
+        for (float b : UNIQUE_FLOATS) {
+            collection.add(b);
+        }
+        Assert.assertThat(collection.toArray(), CoreMatchers.equalTo(UNIQUE_FLOATS));
     }
 
     @Test
-    public void testFloatListComplex() {
-        final FloatCollection collection = new FloatList();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_FLOATS);
-
-        final float[] result = new float[collection.getSize()];
-        for (int i = 0, count = collection.getSize(); i < count; i++) {
-            result[i] = collection.get(i);
+    public void testFloatArrayListContains() {
+        final FloatList collection = new FloatArrayList();
+        for (float b : UNIQUE_FLOATS) {
+            collection.add(b);
         }
 
-        Assert.assertTrue(collection.contains(TestHelpers.CONTAINED_FLOAT));
-        Assert.assertFalse(collection.contains(TestHelpers.OTHER_FLOAT));
-        Assert.assertArrayEquals(TestHelpers.UNIQUE_FLOATS, result, 0.0f);
-    }
-
-    @Test
-    public void testFloatSetBasic() {
-        final FloatCollection collection = new FloatSet();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_FLOATS);
-        final float[] actual = collection.toArray();
-        final float[] expected = TestHelpers.UNIQUE_FLOATS;
-        Assert.assertArrayEquals(expected, actual, 0.0f);
-    }
-
-    @Test
-    public void testFloatSetComplex() {
-        final FloatCollection collection = new FloatSet();
-        TestHelpers.fillCollection(collection, TestHelpers.UNIQUE_FLOATS);
-
-        final float[] result = new float[collection.getSize()];
-        for (int i = 0, count = collection.getSize(); i < count; i++) {
-            result[i] = collection.get(i);
+        for (float b : UNIQUE_FLOATS) {
+            Assert.assertThat(collection.contains(b), CoreMatchers.is(true));
         }
+    }
 
-        Assert.assertTrue(collection.contains(TestHelpers.CONTAINED_LONG));
-        Assert.assertFalse(collection.contains(TestHelpers.OTHER_LONG));
-        Assert.assertArrayEquals(TestHelpers.UNIQUE_FLOATS, result, 0.0f);
+    @Test
+    public void testFloatArraySetAdd() {
+        final FloatSet collection = new FloatArraySet();
+        for (float b : UNIQUE_FLOATS) {
+            collection.add(b);
+        }
+        for (float b : UNIQUE_FLOATS) {
+            collection.add(b);
+        }
+        Assert.assertThat(collection.toArray(), CoreMatchers.equalTo(UNIQUE_FLOATS));
+    }
+
+    @Test
+    public void testFloatArraySetContains() {
+        final FloatSet collection = new FloatArraySet();
+        for (float b : UNIQUE_FLOATS) {
+            collection.add(b);
+        }
+        for (float b : UNIQUE_FLOATS) {
+            Assert.assertThat(collection.contains(b), CoreMatchers.is(true));
+        }
     }
 }
