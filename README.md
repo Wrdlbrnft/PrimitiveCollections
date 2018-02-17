@@ -12,7 +12,7 @@ A lightweight library for efficient Sets and Lists of primitives.
 Just add this dependency to your build.gradle file:
 
 ```groovy
-compile 'com.github.wrdlbrnft:primitive-collections:0.3.0.2'
+implementation 'com.github.wrdlbrnft:primitive-collections:0.3.0.2'
 ```
 
 ## How do I use it?
